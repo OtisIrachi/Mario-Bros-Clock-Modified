@@ -206,9 +206,9 @@ void pidScan()
     if (OSCpush[0]) 
       {
       if (angle_adjusted > -40)
-        ledcWrite(6, SERVO_MIN_PULSEWIDTH);   // was SERVO_MAX_PULSEWIDTH
+        ledcWrite(6, SERVO_MAX_PULSEWIDTH);  // << Swap MIN/MAX to change Servo Direction
       else
-        ledcWrite(6, SERVO_MAX_PULSEWIDTH);   // was SERVO_MIN_PULSEWIDTH
+        ledcWrite(6, SERVO_MIN_PULSEWIDTH);  // << Swap MIN/MAX to change Servo Direction  
       } 
     else
       ledcWrite(6, SERVO_AUX_NEUTRO);
