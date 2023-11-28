@@ -1,19 +1,21 @@
 //**************************************************************************************
 // ESP32BRobotiPhone.ino
 // AP Version.
-// IP Address: 192.168.4.14
+// IP Address: 192.168.4.20
 // Balance Robot using TouchOSC on iPad/iPhone.
 // *** Requires use of TWO IP Addresses ***.
-// See receiveOSC for TouchOSC control definitions.
+// See void receiveOSC() for TouchOSC control definitions.
 // Works with ESP32 and iPAD/iPhone version of TouchOSC "B-Robot Control" template.
 // In iPad/iPhone version of TouchOSC, click on "CHAIN" icon.
+// ******************
 // Connection 1: UDP
-// Host: apIP 192.168.4.14 (ESP32 IP Address)
+// Host: apIP 192.168.4.20 (ESP32 IP Address)
 // Send Port: 8000
 // Receive Port: 9000
 // Zeroconf: Default
+// ******************
 //
-// *** NOTE *** Receive outIP (iPad Address) must be set to 192.168.4.15
+// *** NOTE *** Receive outIP (iPad Address) must be set to one more than apIP (192.168.4.21)
 //
 // ***To create a new template for iPAD/iPhone that was created on PC:***
 // First select the template you wish to transmit.
@@ -27,48 +29,26 @@
 // Press stop cirle at top right
 // You should see the new temple under the name "Untitled".
 // Press folder with "Down Arrow" on it, and "Untitled" should appear at bottom right.
-// Change Filename and click on check mark.
+// Change Filename to ***desired name*** and click on check mark.
 // Tab should now show new filename.
 // Press folder with "Up Arrow" on it, and new filename should appear in list.
 // 
 // 
 // by RCI
 // 11-8-2023
-// Works!!! Used "esp32_wifi_balancing_robot" starting files and removed non-working HTTP code
-// and replaced with my "B_Robot_Control" OSC routines.
-// OSC routines. 
-//
-// 11-11-2023
-// Added Max7219 LED Eyes.
-// 11-12-2023
-// Added "void delayms(int loops)"  to allow PID scans during "Blinking Eyes.h" functions.
-// 11-14-2023
-// Added XY grid (For/Rev and Steer) to TouchOSC and modified "void s1fader1" and
-// "void s1fader1".
-// 11-16-2023
-// Recorded PID - KP = .13,  KD = .08,  PThr = .09,  IThr = 0.0
-// 11-18-2023
-// Refined Blinking Eyes routine for robot moves.
 //
 //**************************************************************************************
 #include <Wire.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include <OSCMessage.h>                // for sending OSC messages
-#include <OSCBundle.h>                 // for receiving OSC messages
+#include <OSCMessage.h>                
+#include <OSCBundle.h>                
 #include <Arduino.h>
 #include "Control.h"
 #include "MPU6050.h"
 #include "Motors.h"
 #include "defines.h"
 #include "globals.h"
-#include <stdio.h>
-#include "esp_types.h"
-#include "soc/timer_group_struct.h"
-#include "driver/periph_ctrl.h"
-#include "driver/timer.h"
-#include "driver/ledc.h"
-#include "esp32-hal-ledc.h"
 #include "BlinkingEyes.h"
 
 // **** Variables *****
@@ -114,13 +94,13 @@ String Strings2fader4Val;
 // Replace with your network credentials
 const char* ssid = "BRobotiPhone";
 
-IPAddress apIP(192,168,4,14);       // Address of ESP
-IPAddress outIP(192,168,4,15);       // Address of ESP
+IPAddress apIP(192,168,4,20);        // Address of ESP
+IPAddress outIP(192,168,4,21);       // Address of ESP
 
-WiFiUDP Udp;                          // A UDP instance to let us send and receive packets over UDP
+WiFiUDP Udp;                         // A UDP instance to let us send and receive packets over UDP
 
-const unsigned int inPort = 8000;     // local port to listen for UDP packets at the NodeMCU (another device must send OSC messages to this port)
-const unsigned int outPort = 9000;    // remote port of the target device where the NodeMCU sends OSC to
+const unsigned int inPort = 8000;    // local port to listen for UDP packets at the NodeMCU (another device must send OSC messages to this port)
+const unsigned int outPort = 9000;   // remote port of the target device where the NodeMCU sends OSC to
 
 String ipString;
 unsigned long previousMillis = 0;
@@ -324,8 +304,6 @@ void setup()
   initMPU6050();
 
   // Set NodeMCU Wifi hostname based on chip mac address
-  //char chip_id[15];
-  //snprintf(chip_id, 15, "%04X", (uint16_t)(ESP.getEfuseMac()>>32));
   String hostname = ssid;
 
   Serial.println();
