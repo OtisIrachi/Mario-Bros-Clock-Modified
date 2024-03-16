@@ -1,14 +1,13 @@
-# B-Robot-IPhone
-B-Robot using ESP32 and TouchOSC with iPad/iPhone.
+# Mario-Bros_Clock_Modified
+Modified Mario Bros Clock code from original by jnthas.
 
-Had a hard time finding a TouchOSC App that actually worked.
-Through trial and error and a bit of luck, this one works well.
-Added MAX7219 LED 8x8 Matrixes for facial expressions.
+For ESP32 D1 Mini.
+Added Seconds display value and update time every second.
+Minor changes to cloud formations to make room for seconds display variable.
 
-Robot body was printed mostly by using JJRobots 3D files.
-Some were modified to accomodate my ESP32 Motherboard and
-a 1400maH Li-Poly Battery.
+WiFI setup for AP mode, but left original code for WiFiManager if you wish to enable.
 
-Robot apIP Address is 192.168.4.20.  You may change it to anything you like, just make sure that
-outIP Address is one more than apIP ex. 192.168.4.21
+
+
+
 
