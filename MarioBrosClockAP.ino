@@ -25,12 +25,8 @@ Clockface *clockface;
 Timezone myTZ;
 
 // Replace with your network credentials
-//const char *ssid = "RCINet2.4";
-//const char *password = "cae4844bb2";
-
-// Replace with your network credentials
-const char *ssid = "josephine";
-const char *password = "drain_8490follow";
+const char *ssid = "your-network";
+const char *password = "your-password";
 
 #define panelResX 64     // Number of pixels wide of each INDIVIDUAL panel module. 
 #define panelResY 64     // Number of pixels tall of each INDIVIDUAL panel module.
